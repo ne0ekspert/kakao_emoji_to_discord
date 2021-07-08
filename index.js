@@ -1,4 +1,9 @@
 const Discord = require('discord.js');
+const fs = require('fs');
+
+const emojiFile = fs.readFileSync('emoji.json');
+const emojiJSON = emojiFile.toString();
+const emoji = JSON.parse(emojiJSON);
 
 const { discord_token } = require('./config.json');
 
@@ -14,7 +19,7 @@ client.on('message', async (ctx) => {
     const words = ctx.content.split(' ');
 
     words.forEach(elem => {
-        if (words[0] === "test") ctx.lineReplyNoMention("Test");
+        if (emoji.hasOwnProperty(elem)) ctx.lineReplyNoMention(emoji[elem]);
     });
 });
 
