@@ -25,7 +25,8 @@ client.on('message', async (ctx) => {
     if (ctx.author.bot) return;
     const words = ctx.content.split(' ');
 
-    if (ctx.mentions.has(client.user)) ctx.lineReply("https://ne0ekspert.n-e.kr/info/discord_bot");
+    if (ctx.mentions.has(client.user))
+        ctx.lineReply("https://ne0ekspert.n-e.kr/info/discord_bot 여기 있음");
 
     words.forEach(elem => {
         if (emoji.hasOwnProperty(elem)) ctx.lineReplyNoMention(emoji[elem]);
