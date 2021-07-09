@@ -1,7 +1,8 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const tempy = require('tempy');
-const request = require('request');
+const got = require('got');
+const FileType = require('file-type');
 
 const emojiFile = fs.readFileSync('emoji.json');
 const emojiJSON = emojiFile.toString();
@@ -32,7 +33,8 @@ client.on('message', async (ctx) => {
 
     words.forEach(elem => {
         if (emoji.hasOwnProperty(elem)) {
-            var attachment = new Discord.MessageAttachment(emoji[elem], 'emoji.png');
+            var stream = got.stream(emoji[elem]);
+            var attachment = new Discord.MessageAttachment(emoji[elem], `emoji.${FileType.fromStream(stream)}`);
             ctx.lineReplyNoMention(attachment);
         }
     });
