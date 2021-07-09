@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
+const tempy = require('tempy');
+const request = require('request');
 
 const emojiFile = fs.readFileSync('emoji.json');
 const emojiJSON = emojiFile.toString();
@@ -7,7 +9,7 @@ const emoji = JSON.parse(emojiJSON);
 
 const { discord_token } = require('./config.json');
 
-require('discord-reply');
+require('discord-reply'); // Required for lineReply and lineReplyNoMention
 const client = new Discord.Client();
 
 client.once('ready', () => {
@@ -29,7 +31,10 @@ client.on('message', async (ctx) => {
         ctx.lineReply("https://ne0ekspert.n-e.kr/info/discord_bot 여기 있음");
 
     words.forEach(elem => {
-        if (emoji.hasOwnProperty(elem)) ctx.lineReplyNoMention(emoji[elem]);
+        if (emoji.hasOwnProperty(elem)) {
+            var attachment = new Discord.MessageAttachment(emoji[elem], 'emoji.png');
+            ctx.lineReplyNoMention(attachment);
+        }
     });
 });
 
