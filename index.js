@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const tempy = require('tempy');
 const got = require('got');
 const FileType = require('file-type');
 
@@ -31,13 +30,17 @@ client.on('message', async (ctx) => {
     if (ctx.mentions.has(client.user))
         ctx.lineReply("https://ne0ekspert.n-e.kr/info/discord_bot 여기 있음");
 
-    words.forEach(elem => {
+    words.forEach(async (elem) => {
         if (emoji.hasOwnProperty(elem)) {
             var stream = got.stream(emoji[elem]);
-            var attachment = new Discord.MessageAttachment(emoji[elem], `emoji.${FileType.fromStream(stream)}`);
-            ctx.lineReplyNoMention(attachment);
-        }
-    });
-});
+            FileType.fromStream(stream)
+            .then((ext) => {
+                console.log(ext);
+                var attachment = new Discord.MessageAttachment(emoji[elem], `emoji.${ext['ext']}`);
+                ctx.lineReplyNoMention(attachment);
+            }); // end.then
+        } // endif
+    }); // endforEach
+}); // end.on
 
 client.login(discord_token);
