@@ -22,6 +22,12 @@ client.once('ready', () => {
         }
     });
 });
+client.once('reconnecting', () => {
+    console.log("재연결중...");
+});
+client.once('disconnect', () => {
+    console.log("연결 해제됨");
+});
 
 client.on('message', async (ctx) => {
     if (ctx.author.bot) return;
@@ -33,14 +39,12 @@ client.on('message', async (ctx) => {
     words.forEach(async (elem) => {
         if (emoji.hasOwnProperty(elem)) {
             var stream = got.stream(emoji[elem]);
-            FileType.fromStream(stream)
-            .then((ext) => {
-                console.log(ext);
+            FileType.fromStream(stream).then((ext) => {
                 var attachment = new Discord.MessageAttachment(emoji[elem], `emoji.${ext['ext']}`);
                 ctx.lineReplyNoMention(attachment);
-            }); // end.then
-        } // endif
-    }); // endforEach
-}); // end.on
+            }); // end FileType.then
+        } // end if
+    }); // end forEach
+}); // end client.on
 
 client.login(discord_token);
