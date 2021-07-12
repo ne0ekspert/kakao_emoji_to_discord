@@ -38,7 +38,7 @@ client.on('message', async (ctx) => {
 
     words.forEach(async (elem) => {
         if (emoji.hasOwnProperty(elem)) {
-            var attachment = new Discord.MessageAttachment(emoji[elem]['url'], `emoji.${ext['ext']}`);
+            var attachment = new Discord.MessageAttachment(emoji[elem]['url'], `emoji.${emoji[elem]['ext']}`);
             ctx.lineReplyNoMention(attachment);
         } // end if
     }); // end forEach
