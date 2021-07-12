@@ -38,11 +38,8 @@ client.on('message', async (ctx) => {
 
     words.forEach(async (elem) => {
         if (emoji.hasOwnProperty(elem)) {
-            var stream = got.stream(emoji[elem]);
-            FileType.fromStream(stream).then((ext) => {
-                var attachment = new Discord.MessageAttachment(emoji[elem]['url'], `emoji.${ext['ext']}`);
-                ctx.lineReplyNoMention(attachment);
-            }); // end FileType.then
+            var attachment = new Discord.MessageAttachment(emoji[elem]['url'], `emoji.${ext['ext']}`);
+            ctx.lineReplyNoMention(attachment);
         } // end if
     }); // end forEach
 }); // end client.on
