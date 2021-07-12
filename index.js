@@ -40,7 +40,7 @@ client.on('message', async (ctx) => {
         if (emoji.hasOwnProperty(elem)) {
             var stream = got.stream(emoji[elem]);
             FileType.fromStream(stream).then((ext) => {
-                var attachment = new Discord.MessageAttachment(emoji[elem], `emoji.${ext['ext']}`);
+                var attachment = new Discord.MessageAttachment(emoji[elem]['url'], `emoji.${ext['ext']}`);
                 ctx.lineReplyNoMention(attachment);
             }); // end FileType.then
         } // end if
